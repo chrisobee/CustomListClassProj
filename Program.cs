@@ -6,7 +6,9 @@ namespace CustomListClass
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            CustomList<int> numbers = new CustomList<int>();
+            numbers.Add(1);
+            numbers.Add(2);
         }
     }
 }

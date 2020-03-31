@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CustomListClass
 {
@@ -6,9 +7,9 @@ namespace CustomListClass
     {
         static void Main(string[] args)
         {
-            CustomList<int> numbers = new CustomList<int>();
-            numbers.Add(1);
-            numbers.Add(2);
+            List<string> names = new List<string>() { "chris", "austin", "shannon", "aaron" };
+            names.Remove("austin");
+            names.Add("aaaron");
         }
     }
 }

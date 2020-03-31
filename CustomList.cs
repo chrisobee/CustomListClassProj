@@ -69,7 +69,7 @@ namespace CustomListClass
                     sb.Append($", {items[i]}");
                 }
             }
-            return sb.ToString().ToLower();
+            return sb.ToString();
         }
 
         public void Add(T input)
@@ -81,6 +81,20 @@ namespace CustomListClass
             items[currentIndex] = input;
             currentIndex++;
             count++;
+        }
+
+        public static CustomList<T> operator +(CustomList<T> list1, CustomList<T> list2)
+        {
+            CustomList<T> newList = new CustomList<T>();
+            for (int i = 0; i < list1.Count; i++)
+            {
+                newList.Add(list1.items[i]);
+            }
+            for (int i = 0; i < list2.Count; i++)
+            {
+                newList.Add(list2.items[i]);
+            }
+            return newList;
         }
 
         public void IncreaseCapacity()
@@ -103,6 +117,7 @@ namespace CustomListClass
                 if (items[i].Equals(input))
                 {
                     ReorderArray(i);
+                    currentIndex--;
                     count--;
                     return true;
                 }

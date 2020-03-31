@@ -7,7 +7,7 @@ namespace CustomListClass
     public class CustomList<T>
     {
         T[] items;
-        T[] tempArray;
+
         private int count;
         public int Count
         {
@@ -35,15 +35,41 @@ namespace CustomListClass
             }
             set 
             { 
-                items[index] = value;
+                if(index >= 0 && index < Count)
+                {
+                    items[index] = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
             }
         }
+
         public int Capacity { get; set; }
+
         public CustomList()
         {
             count = 0;
             Capacity = 4;
             items = new T[Capacity];
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < count; i++)
+            {
+                if(i == 0)
+                {
+                    sb.Append($"{items[i]}");
+                }
+                else
+                {
+                    sb.Append($", {items[i]}");
+                }
+            }
+            return sb.ToString().ToLower();
         }
 
         public void Add(T input)
@@ -59,6 +85,7 @@ namespace CustomListClass
 
         public void IncreaseCapacity()
         {
+            T[] tempArray;
             tempArray = items;
             Capacity *= 2;
             items = new T[Capacity];
@@ -70,19 +97,17 @@ namespace CustomListClass
 
         public bool Remove(T input)
         {
-            bool itemExists = false;
+            //bool itemExists = false;
             for (int i = 0; i < count; i++)
             {
                 if (items[i].Equals(input))
                 {
                     ReorderArray(i);
-                    itemExists = true;
-                    break;
+                    count--;
+                    return true;
                 }
             }
-            CheckForCountDecrement(itemExists);
-            return itemExists;
-            
+            return false;
         }
 
         public void ReorderArray(int i)
@@ -98,14 +123,6 @@ namespace CustomListClass
                     items[i] = items[j];
                     i++;
                 }
-            }
-        }
-
-        public void CheckForCountDecrement(bool itemExists)
-        {
-            if (itemExists)
-            {
-                count--;
             }
         }
     }

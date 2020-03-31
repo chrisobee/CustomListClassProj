@@ -46,13 +46,13 @@ namespace CustomListClass
             items = new T[Capacity];
         }
 
-        public void Add(T item)
+        public void Add(T input)
         {
             if(count == Capacity)
             {
                 IncreaseCapacity();
             }
-            items[currentIndex] = item;
+            items[currentIndex] = input;
             currentIndex++;
             count++;
         }
@@ -65,6 +65,47 @@ namespace CustomListClass
             for (int i = 0; i < tempArray.Length; i++)
             {
                 items[i] = tempArray[i];
+            }
+        }
+
+        public bool Remove(T input)
+        {
+            bool itemExists = false;
+            for (int i = 0; i < count; i++)
+            {
+                if (items[i].Equals(input))
+                {
+                    ReorderArray(i);
+                    itemExists = true;
+                    break;
+                }
+            }
+            CheckForCountDecrement(itemExists);
+            return itemExists;
+            
+        }
+
+        public void ReorderArray(int i)
+        {
+            for (int j = i + 1; j <= count; j++)
+            {
+                if(j == count)
+                {
+                    items[i] = default;
+                }
+                else
+                {
+                    items[i] = items[j];
+                    i++;
+                }
+            }
+        }
+
+        public void CheckForCountDecrement(bool itemExists)
+        {
+            if (itemExists)
+            {
+                count--;
             }
         }
     }

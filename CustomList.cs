@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Text;
 
 namespace CustomListClass
 {
-    public class CustomList<T>
+    public class CustomList<T>:IEnumerable
     {
         T[] items;
 
@@ -55,6 +55,13 @@ namespace CustomListClass
             items = new T[Capacity];
         }
 
+        public IEnumerator GetEnumerator()
+        {
+            for (int index = 0; index < Count; index++)
+            {
+                yield return items[index]; 
+            }
+        }
 
         public void Add(T input)
         {

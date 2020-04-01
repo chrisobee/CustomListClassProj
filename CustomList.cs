@@ -97,6 +97,33 @@ namespace CustomListClass
             return newList;
         }
 
+        public static CustomList<T> operator -(CustomList<T> listOne, CustomList<T> listTwo)
+        {
+            CustomList<T> newList = new CustomList<T>();
+            bool removeItem = false;
+            for (int i = 0; i < listOne.Count; i++)
+            {
+                for (int j = 0; j < listTwo.Count; j++)
+                {
+                    removeItem = false;
+                    if (listTwo[j].Equals(listOne[i]))
+                    {
+                        removeItem = true;
+                        break;
+                    }
+                }
+                if (removeItem)
+                {
+                    continue;
+                }
+                else
+                {
+                    newList.Add(listOne[i]);
+                }
+            }
+            return newList;
+        }
+
         public void IncreaseCapacity()
         {
             T[] tempArray;

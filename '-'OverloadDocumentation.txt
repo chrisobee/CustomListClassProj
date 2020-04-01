@@ -1,0 +1,44 @@
+"-" Overload
+
+Description:
+This overload allows the one list's values to be subtracted by another list's values.
+
+Syntax:
+CustomList<T> list = (CustomList<T> list1 - CustomList<T> list2);
+
+Parameters:
+N/A
+
+Return Type:
+CustomList<T> newList
+A list containing the first list's values with the second list's values taken out of it.
+
+
+Example Use:
+using System;
+
+public class Example
+{
+	public void SubtractLists()
+	{
+		CustomList<string> list1 = new CustomList<string>();
+        	CustomList<string> list2 = new CustomList<string>();
+		CustomList<string> newList;
+
+		list1.Add("hello");
+		list1.Add("big");
+		list1.Add("world");
+
+		list2.Add("big");
+
+		newList = list1 - list2;
+		for(i = 0; i < newList.Count; i++)
+		{
+			Console.WriteLine($"{newList[i]}");
+		}
+	}
+}
+
+//Output:
+//hello
+//world

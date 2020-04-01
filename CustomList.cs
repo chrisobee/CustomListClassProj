@@ -17,7 +17,7 @@ namespace CustomListClass
             }
         }
 
-        public int currentIndex = 0;
+        private int currentIndex = 0;
 
         public T this[int index]
         {
@@ -55,22 +55,6 @@ namespace CustomListClass
             items = new T[Capacity];
         }
 
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < count; i++)
-            {
-                if(i == 0)
-                {
-                    sb.Append($"{items[i]}");
-                }
-                else
-                {
-                    sb.Append($", {items[i]}");
-                }
-            }
-            return sb.ToString();
-        }
 
         public void Add(T input)
         {
@@ -81,47 +65,6 @@ namespace CustomListClass
             items[currentIndex] = input;
             currentIndex++;
             count++;
-        }
-
-        public static CustomList<T> operator +(CustomList<T> list1, CustomList<T> list2)
-        {
-            CustomList<T> newList = new CustomList<T>();
-            for (int i = 0; i < list1.Count; i++)
-            {
-                newList.Add(list1.items[i]);
-            }
-            for (int i = 0; i < list2.Count; i++)
-            {
-                newList.Add(list2.items[i]);
-            }
-            return newList;
-        }
-
-        public static CustomList<T> operator -(CustomList<T> listOne, CustomList<T> listTwo)
-        {
-            CustomList<T> newList = new CustomList<T>();
-            bool removeItem = false;
-            for (int i = 0; i < listOne.Count; i++)
-            {
-                for (int j = 0; j < listTwo.Count; j++)
-                {
-                    removeItem = false;
-                    if (listTwo[j].Equals(listOne[i]))
-                    {
-                        removeItem = true;
-                        break;
-                    }
-                }
-                if (removeItem)
-                {
-                    continue;
-                }
-                else
-                {
-                    newList.Add(listOne[i]);
-                }
-            }
-            return newList;
         }
 
         public void IncreaseCapacity()
@@ -156,7 +99,7 @@ namespace CustomListClass
         {
             for (int j = i + 1; j <= count; j++)
             {
-                if(j == count)
+                if (j == count)
                 {
                     items[i] = default;
                 }
@@ -165,6 +108,111 @@ namespace CustomListClass
                     items[i] = items[j];
                     i++;
                 }
+            }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < count; i++)
+            {
+                if (i == 0)
+                {
+                    sb.Append($"{items[i]}");
+                }
+                else
+                {
+                    sb.Append($", {items[i]}");
+                }
+            }
+            return sb.ToString();
+        }
+
+        public static CustomList<T> operator +(CustomList<T> list1, CustomList<T> list2)
+        {
+            CustomList<T> newList = new CustomList<T>();
+            for (int i = 0; i < list1.Count; i++)
+            {
+                newList.Add(list1[i]);
+            }
+            for (int i = 0; i < list2.Count; i++)
+            {
+                newList.Add(list2[i]);
+            }
+            return newList;
+        }
+
+        public static CustomList<T> operator -(CustomList<T> listOne, CustomList<T> listTwo)
+        {
+            CustomList<T> newList = new CustomList<T>();
+            bool removeItem = false;
+            for (int i = 0; i < listOne.Count; i++)
+            {
+                for (int j = 0; j < listTwo.Count; j++)
+                {
+                    removeItem = false;
+                    if (listTwo[j].Equals(listOne[i]))
+                    {
+                        removeItem = true;
+                        break;
+                    }
+                }
+                if (removeItem)
+                {
+                    continue;
+                }
+                else
+                {
+                    newList.Add(listOne[i]);
+                }
+            }
+            return newList;
+        }
+
+        public CustomList<T> Zip(CustomList<T> listOne,CustomList<T> listTwo)
+        {
+            CustomList<T> newList = new CustomList<T>();
+            if(listOne.Count >= listTwo.Count )
+            {
+                for (int i = 0; i < listOne.Count; i++)
+                {
+                    if (i == (listTwo.Count))
+                    {
+                        newList.AddRestOfList(listOne, i);
+                        break;
+                    }
+                    else
+                    {
+                        newList.Add(listOne[i]);
+                        newList.Add(listTwo[i]);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < listTwo.Count; i++)
+                {
+                    if (i == (listOne.Count))
+                    {
+                        newList.AddRestOfList(listTwo, i);
+                        break;
+                    }
+                    else
+                    {
+                        newList.Add(listOne[i]);
+                        newList.Add(listTwo[i]);
+                    }
+                }
+            }
+            
+            return newList;
+        }
+
+        public void AddRestOfList(CustomList<T> currentList, int i)
+        {
+            for (int j = i; j < currentList.Count; j++)
+            {
+                Add(currentList[j]);
             }
         }
     }

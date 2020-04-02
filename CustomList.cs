@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace CustomListClass
@@ -176,7 +177,7 @@ namespace CustomListClass
             return newList;
         }
 
-        public CustomList<T> Zip(CustomList<T> listOne,CustomList<T> listTwo)
+        public static CustomList<T> Zip(CustomList<T> listOne,CustomList<T> listTwo)
         {
             CustomList<T> newList = new CustomList<T>();
             if(listOne.Count >= listTwo.Count )
@@ -221,6 +222,77 @@ namespace CustomListClass
             {
                 Add(currentList[j]);
             }
+        }
+
+        public void Sort(IComparer<T> comparer)
+        {
+            bool swappedNumbers;
+            do
+            {
+                int start = 0;
+                int end = Count - 1;
+                swappedNumbers = false;
+
+                swappedNumbers = ForwardPass(comparer, start, end);
+                swappedNumbers = BackwardPass(comparer, start, end);
+            }
+            while (swappedNumbers == true);
+        }
+
+        public bool ForwardPass(IComparer<T> comparer, int start, int end)
+        {
+            int result;
+            T temp;
+            bool swappedNumbers = false;
+            for (int i = start; i < end; i++)
+            {
+                result = comparer.Compare(items[i], items[i + 1]);
+                if (result == 0)
+                {
+                    continue;
+                }
+                else if (result == 1)
+                {
+                    temp = items[i];
+                    items[i] = items[i + 1];
+                    items[i + 1] = temp;
+                    swappedNumbers = true;
+                }
+                else if (result == -1)
+                {
+                    continue;
+                }
+            }
+            end--;
+            return swappedNumbers;
+        }
+
+        public bool BackwardPass(IComparer<T> comparer, int start, int end)
+        {
+            int result;
+            T temp;
+            bool swappedNumbers = false;
+            for (int i = end; i > start; i--)
+            {
+                result = comparer.Compare(items[i], items[i - 1]);
+                if (result == 0)
+                {
+                    continue;
+                }
+                else if (result == 1)
+                {
+                    continue;
+                }
+                else if (result == -1)
+                {
+                    temp = items[i];
+                    items[i] = items[i - 1];
+                    items[i - 1] = temp;
+                    swappedNumbers = true;
+                }
+            }
+            start++;
+            return swappedNumbers;
         }
     }
 }

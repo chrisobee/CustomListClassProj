@@ -89,7 +89,6 @@ namespace CustomListClass
 
         public bool Remove(T input)
         {
-            //bool itemExists = false;
             for (int i = 0; i < count; i++)
             {
                 if (items[i].Equals(input))
@@ -101,6 +100,17 @@ namespace CustomListClass
                 }
             }
             return false;
+        }
+
+        public void RemoveAt(int index)
+        {
+            for (int i = index; i < count;)
+            {
+                ReorderArray(i);
+                currentIndex--;
+                count--;
+                break;
+            }
         }
 
         public void ReorderArray(int i)
